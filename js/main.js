@@ -91,3 +91,4 @@ const createPhoto = function() {
 
 const photos = Array.from({length: NUMBER_OF_PHOTOS}, createPhoto);
 // console.log(photos);
+photos();
