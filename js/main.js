@@ -43,6 +43,9 @@ const getRandomId = function(min, max) {
   const arrayId = [];
   return function() {
     let id = getRandom(min, max);
+    if (arrayId.length === max) {
+      return null;
+    }
     while (arrayId.includes(id)) {
       id = getRandom(min, max);
     }
@@ -89,6 +92,8 @@ const createPhoto = function() {
 
 // Создаем массив из объектов "Фото" длиной length
 
-const photos = Array.from({length: NUMBER_OF_PHOTOS}, createPhoto);
-// console.log(photos);
-photos();
+const getPhotos = function() {
+  Array.from({length: NUMBER_OF_PHOTOS}, createPhoto);
+};
+
+getPhotos();
