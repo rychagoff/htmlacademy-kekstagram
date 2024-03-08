@@ -72,3 +72,45 @@ getNumber('а я томат'); // NaN
 getNumber(2023); // 2023
 getNumber(-1); // 1
 getNumber(1.5); // 15
+
+/*-----*/
+
+/*
+Функцию принимает время начала и конца рабочего дня, время старта и продолжительность встречи в минутах.
+Возвращает true, если встреча не выходит за рамки рабочего дня, и false, если выходит.
+
+Время = строка в формате часы:минуты.
+Продолжительность = число.
+
+Время в формате как двух цифр, так и одной. Например, 08:05, 8:5, 08:5 или 8:05.
+Гарантируется, что и рабочий день, и встреча укладываются в одни календарные сутки.
+'8:00' - начало рабочего дня
+'17:30' - конец рабочего дня
+'14:00' - начало встречи
+90 - продолжительность встречи в минутах
+*/
+
+const checkMeeting = function (workingStart, workingEnd, meetingStart, meetingDuration) {
+
+  const toMinute = function (time) {
+    const array = time.split(':');
+    const result = Number(array[0] * 60) + Number(array[1]);
+    return result;
+  };
+
+  const toMinuteWorkingStart = toMinute(workingStart);
+  const toMinuteWorkingEnd = toMinute(workingEnd);
+  const toMinuteMeeteingStart = toMinute(meetingStart);
+  const toMinuteMeeteingEnd = toMinuteMeeteingStart + meetingDuration;
+
+  if (toMinuteMeeteingStart >= toMinuteWorkingStart && toMinuteMeeteingEnd <= toMinuteWorkingEnd) {
+    return true;
+  }
+  return false;
+};
+
+checkMeeting('08:00', '17:30', '14:00', 90); // true
+checkMeeting('8:0', '10:0', '8:0', 120); // true
+checkMeeting('08:00', '14:30', '14:00', 90); // false
+checkMeeting('14:00', '17:30', '08:0', 90); // false
+checkMeeting('8:00', '17:30', '08:00', 900); // false
