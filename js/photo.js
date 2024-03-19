@@ -21,3 +21,5 @@ pictures.forEach((picture) => {
 });
 
 picturesList.append(picturesFragment);
+
+export { pictures };
