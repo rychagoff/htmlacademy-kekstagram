@@ -12,8 +12,9 @@ const picturesFragment = document.createDocumentFragment();
 
 pictures.forEach((picture) => {
   const similarPicture = pictureTemplateItem.cloneNode(true);
-  similarPicture.querySelector('.picture__img').src = picture.url;
-  similarPicture.querySelector('.picture__img').alt = picture.description;
+  const pictureImage = similarPicture.querySelector('.picture__img');
+  pictureImage.src = picture.url;
+  pictureImage.alt = picture.description;
   similarPicture.querySelector('.picture__comments').textContent = picture.comment.length;
   similarPicture.querySelector('.picture__likes').textContent = picture.likes;
   picturesFragment.appendChild(similarPicture);
