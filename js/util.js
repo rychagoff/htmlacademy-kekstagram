@@ -30,4 +30,16 @@ const getRandomId = function(min, max) {
   };
 };
 
-export { getRandom, getRandomElement, getRandomId };
+// Проверяем, нажата ли клавиша ESC при закрытии модального окна
+
+const isEscapeKey = function(evt) {
+  return evt.key === 'Escape';
+};
+
+// Проверяем, нажата ли клавиша ENTER при открытии модального окна
+
+const isEnterKey = function(evt) {
+  return evt.key === 'Enter';
+};
+
+export { getRandom, getRandomElement, getRandomId, isEscapeKey, isEnterKey };
