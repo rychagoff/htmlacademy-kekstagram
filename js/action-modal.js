@@ -2,19 +2,13 @@
 // блокировку и разблокировку скролла вынести в отдельную функцию
 /* */
 
-// import { pictures } from './photo.js';
+import { pictures } from './photo.js';
 import { isEscapeKey, isEnterKey } from './util.js';
+import { modalPicture, renderModal } from './render-modal.js';
 
-const modalPicture = document.querySelector('.big-picture'); // Ищем модальное окно
-
-// Ищем его изображение и кнопку закрытия
-// const modalPictureImg = modalPicture.querySelector('.big-picture__img').querySelector('img');
-const modalPictureClose = modalPicture.querySelector('.big-picture__cancel');
-
+// const modalPicture = document.querySelector('.big-picture'); // Ищем модальное окно
+const modalPictureClose = modalPicture.querySelector('.big-picture__cancel'); // Ищем кнопку закрытия
 const miniatures = document.querySelectorAll('.picture'); // Ищем миниатюры
-
-// const arrayUrl = pictures.map((item) => item.url); // Получаем массив путей изображений
-// console.log(arrayUrl);
 
 const modalOpen = function() {
   modalPicture.classList.remove('hidden');
@@ -34,23 +28,6 @@ const onDocumentKeydownEscape = function(evt) {
   }
 };
 
-// // Пишем обработчик для каждой миниатюры
-// // В параметрах миниатюра и элемент массива путей
-// const miniatureClickHandler = function(miniature, arayUrlItem) {
-//   miniature.addEventListener('click', () => {
-//     modalOpen();
-//     modalPictureImg.src = arayUrlItem; // Меняем путь большого изображения
-//   });
-// };
-
-// // Перебор массива миниатюр
-// // В параметрах миниатюра и её индекс
-// miniatures.forEach((miniature, index) => {
-//   // Индекс миниатюры передаем в параметр обработчику (как индекс пути),
-//   // чтобы связать каждую миниатюру с каждым её путем
-//   miniatureClickHandler(miniature, arrayUrl[index]);
-// });
-
 // Функция добавляет обработчик нажатия клавиши ESC
 const miniatureKeydownEscapeOn = function() {
   document.addEventListener('keydown', onDocumentKeydownEscape);
@@ -61,14 +38,17 @@ const miniatureKeydownEscapeOff = function() {
 };
 
 // Функция добавления обработчиков открытия модального окна по ESC и ENTER для каждой миниатюры
-const miniatureOpenHandler = function(miniature) {
+const miniatureOpenHandler = function(miniature, picture) {
   miniature.addEventListener('click', () => {
+    renderModal(picture);
     modalOpen();
     miniatureKeydownEscapeOn();
+    // console.log(picture);
   });
   miniature.addEventListener('keydown', (evt) => {
     if (isEnterKey(evt)) {
       evt.preventDefault();
+      renderModal(picture);
       modalOpen();
       miniatureKeydownEscapeOn();
       // console.log('Ха! Работает isEnterKey!');
@@ -76,8 +56,10 @@ const miniatureOpenHandler = function(miniature) {
   });
 };
 
-miniatures.forEach((miniature) => {
-  miniatureOpenHandler(miniature);
+miniatures.forEach((miniature, index) => {
+  miniatureOpenHandler(miniature, pictures[index]);
+  // console.log(miniature);
+  // console.log(pictures[index]);
 });
 
 modalPictureClose.addEventListener('click', () => {
