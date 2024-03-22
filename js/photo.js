@@ -15,7 +15,7 @@ pictures.forEach((picture) => {
   const pictureImage = similarPicture.querySelector('.picture__img');
   pictureImage.src = picture.url;
   pictureImage.alt = picture.description;
-  similarPicture.querySelector('.picture__comments').textContent = picture.comment.length;
+  similarPicture.querySelector('.picture__comments').textContent = picture.comments.length;
   similarPicture.querySelector('.picture__likes').textContent = picture.likes;
   picturesFragment.appendChild(similarPicture);
 });
