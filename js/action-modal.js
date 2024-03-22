@@ -18,6 +18,10 @@ const modalClose = function() {
   modalPicture.classList.add('hidden');
 };
 
+const scrollLock = function() {
+  document.body.classList.toggle('modal-open');
+};
+
 // Функция закрывает окно, если нажата клавиша ESC
 const onDocumentKeydownEscape = function(evt) {
   if (isEscapeKey(evt)) {
@@ -42,6 +46,7 @@ const miniatureOpenHandler = function(miniature, picture) {
   miniature.addEventListener('click', () => {
     renderModal(picture);
     modalOpen();
+    scrollLock();
     miniatureKeydownEscapeOn();
     // console.log(picture);
   });
@@ -50,6 +55,7 @@ const miniatureOpenHandler = function(miniature, picture) {
       evt.preventDefault();
       renderModal(picture);
       modalOpen();
+      scrollLock();
       miniatureKeydownEscapeOn();
       // console.log('Ха! Работает isEnterKey!');
     }
@@ -58,18 +64,18 @@ const miniatureOpenHandler = function(miniature, picture) {
 
 miniatures.forEach((miniature, index) => {
   miniatureOpenHandler(miniature, pictures[index]);
-  // console.log(miniature);
-  // console.log(pictures[index]);
 });
 
 modalPictureClose.addEventListener('click', () => {
   modalClose();
+  scrollLock();
   miniatureKeydownEscapeOff();
 });
 
 modalPictureClose.addEventListener('keydown', (evt) => {
   if (isEnterKey(evt)) {
     modalClose();
+    scrollLock();
     miniatureKeydownEscapeOff();
     // console.log('Ха! Работает isEnterKey!');
   }
