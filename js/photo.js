@@ -1,4 +1,5 @@
 import { getPhotos } from './data.js';
+import { modalOpenHandler } from './action-modal.js';
 
 // Ищем контейнер для изображений
 const picturesList = document.querySelector('.pictures');
@@ -18,8 +19,9 @@ pictures.forEach((picture) => {
   similarPicture.querySelector('.picture__comments').textContent = picture.comments.length;
   similarPicture.querySelector('.picture__likes').textContent = picture.likes;
   picturesFragment.appendChild(similarPicture);
-});
 
+  modalOpenHandler(similarPicture);
+});
 picturesList.append(picturesFragment);
 
 export { pictures };

@@ -1,6 +1,6 @@
-import { getPhotos } from './data.js';
+// import { getPhotos } from './data.js';
 import './photo.js';
-import './action-modal.js';
+// import './action-modal.js';
 
-getPhotos();
+// pictures();
 // console.log(getPhotos());
