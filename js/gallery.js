@@ -1,14 +1,14 @@
 // import { getPhotos } from './data.js';
 // import { modalOpenHandler } from './action-modal.js';
 
-const getGallery = function(pictures) {
-  // Ищем контейнер для изображений
-  const picturesList = document.querySelector('.pictures');
-  // Ищем шаблон
-  const pictureTemplate = document.querySelector('#picture');
-  // Ищем элемент шаблона
-  const pictureTemplateItem = pictureTemplate.content.querySelector('.picture');
+// Ищем контейнер для изображений
+const picturesList = document.querySelector('.pictures');
+// Ищем шаблон
+const pictureTemplate = document.querySelector('#picture');
+// Ищем элемент шаблона
+const pictureTemplateItem = pictureTemplate.content.querySelector('.picture');
 
+const getGallery = function(pictures) {
   const picturesFragment = document.createDocumentFragment();
 
   pictures.forEach((picture) => {
@@ -26,7 +26,8 @@ const getGallery = function(pictures) {
   });
   picturesList.append(picturesFragment);
 
+  return picturesList;
 };
 
-export { getGallery };
+export { getGallery, picturesList };
 // export { pictures };
