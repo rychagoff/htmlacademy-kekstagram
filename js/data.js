@@ -21,7 +21,8 @@ const NAME = [
 ];
 
 const NUMBER_OF_PHOTOS = 25;
-const SHOWN_COMMENTS = 5;
+const START_COMMENTS = 0;
+const COMMENTS_STEP = 5;
 const MAX_COMMENTS = 30;
 
 // Получаем неповторимые ID в конкретных диапазонах
@@ -66,4 +67,4 @@ const getPhotos = function() {
   return Array.from({length: NUMBER_OF_PHOTOS}, createPhoto);
 };
 
-export { getPhotos, SHOWN_COMMENTS };
+export { getPhotos, START_COMMENTS, COMMENTS_STEP };

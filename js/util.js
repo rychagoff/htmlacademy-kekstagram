@@ -44,13 +44,13 @@ const isEscapeKey = function(evt) {
 
 // Открытие и закрытие модального окна
 
-const modalHiddenToggle = function(modal) {
+const modalHiddenToggle = (modal) => {
   modal.classList.toggle('hidden');
 };
 
 // Блокировка и разбокировка скролла
 
-const scrollLockToggle = function() {
+const scrollLockToggle = () => {
   document.body.classList.toggle('modal-open');
 };
 
