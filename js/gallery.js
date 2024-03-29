@@ -1,4 +1,4 @@
-// import { getPhotos } from './data.js';
+import { getPhotos } from './data.js';
 // import { modalOpenHandler } from './action-modal.js';
 
 // Ищем контейнер для изображений
@@ -8,26 +8,23 @@ const pictureTemplate = document.querySelector('#picture');
 // Ищем элемент шаблона
 const pictureTemplateItem = pictureTemplate.content.querySelector('.picture');
 
-const getGallery = function(pictures) {
-  const picturesFragment = document.createDocumentFragment();
+const pictures = getPhotos();
+const picturesFragment = document.createDocumentFragment();
 
-  pictures.forEach((picture) => {
-    const similarPicture = pictureTemplateItem.cloneNode(true);
-    const pictureImage = similarPicture.querySelector('.picture__img');
+pictures.forEach(({id, url, description, likes, comments}) => {
+  const picture = pictureTemplateItem.cloneNode(true);
+  const pictureImage = picture.querySelector('.picture__img');
+  const pictureComments = picture.querySelector('.picture__comments');
+  const pictureLikes = picture.querySelector('.picture__likes');
 
-    pictureImage.src = picture.url;
-    pictureImage.alt = picture.description;
-    similarPicture.dataset.index = picture.id;
-    similarPicture.querySelector('.picture__comments').textContent = picture.comments.length;
-    similarPicture.querySelector('.picture__likes').textContent = picture.likes;
+  picture.dataset.index = id;
+  pictureImage.src = url;
+  pictureImage.alt = description;
+  pictureComments.textContent = comments.length;
+  pictureLikes.textContent = likes;
 
-    picturesFragment.appendChild(similarPicture);
-    // modalOpenHandler(similarPicture);
-  });
-  picturesList.append(picturesFragment);
+  picturesFragment.appendChild(picture);
+});
+picturesList.append(picturesFragment);
 
-  return picturesList;
-};
-
-export { getGallery, picturesList };
-// export { pictures };
+export { pictures, picturesList };
