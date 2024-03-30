@@ -21,7 +21,7 @@ const NAME = [
 ];
 
 const NUMBER_OF_PHOTOS = 25;
-const START_COMMENTS = 0;
+const START_COMMENTS = 5;
 const COMMENTS_STEP = 5;
 const MAX_COMMENTS = 30;
 
