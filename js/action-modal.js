@@ -1,8 +1,6 @@
 import { isEscapeKey, modalHiddenToggle, scrollLockToggle } from './util.js';
 import { pictures, picturesList } from './gallery.js';
-// import { renderComments, commentsLoaderHandler, renderCommentsLoader, clearComments } from './comments.js';
-// import { renderComments, commentsLoaderHandler } from './comments.js';
-// import { clearComments } from './comments.js';
+import { START_COMMENTS, COMMENTS_STEP } from './data.js';
 
 // Ищем модальное окно
 const modalPicture = document.querySelector('.big-picture');
@@ -12,6 +10,11 @@ const modalPictureImg = modalPicture.querySelector('.big-picture__img').querySel
 const modalPictureLikes = modalPicture.querySelector('.likes-count');
 // Ищем описание изображения
 const modalPictureDescription = modalPicture.querySelector('.social__caption');
+
+// Ищем блок с счетчиком и кол-вом комментариев
+const modalPictureCommentCount = modalPicture.querySelector('.social__comment-count');
+const modalPictureCommentShown = modalPictureCommentCount.querySelector('.social__comment-shown-count');
+const modalPictureCommentTotal = modalPictureCommentCount.querySelector('.social__comment-total-count');
 
 // Ищем блок со списком комментариев
 const modalPictureComments = modalPicture.querySelector('.social__comments');
@@ -23,24 +26,16 @@ const modalPictureCommentsLoader = modalPicture.querySelector('.social__comments
 // Ищем кнопку закрытия
 const modalPictureClose = modalPicture.querySelector('.big-picture__cancel');
 
-// console.log(picturesList); // Вывод DOM-списка миниатюр
 let picture = {};
-// console.log(picture);
+let startComment = START_COMMENTS;
 
-// const onCommentsHandler = () => {
-//   // evt.preventDefault();
-//   renderCommentsLoader(picture.comments);
-//   console.log(picture.comments);
-// };
+const commentsFragment = document.createDocumentFragment();
 
-const renderComments = (comments) => {
-//   // console.log(currentPicture); // Вывод объекта миниатюры
-//   // const comments = picture.comments;
-  console.log(comments); // Вывод массива объектов-комментариев
-  // console.log(picture); // Вывод объекта-миниатюры
+const clearComments = () => {
+  startComment = 0;
+};
 
-  modalPictureComments.innerHTML = '';
-  const commentsFragment = document.createDocumentFragment();
+const renderComment = (comments) => {
 
   comments.forEach(({avatar, name, message}) => {
     const comment = modalPictureCommentTemplate.cloneNode(true);
@@ -53,7 +48,40 @@ const renderComments = (comments) => {
 
     commentsFragment.append(comment);
   });
+
   modalPictureComments.append(commentsFragment);
+};
+
+const renderComments = (comments) => {
+  console.log('МАССИВ КОММЕНТАРИЕВ ЭТОГО DOM-ЭЛЕМЕНТА');
+  console.log(comments); // Вывод массива объектов-комментариев
+
+  modalPictureComments.innerHTML = '';
+
+  startComment += COMMENTS_STEP;
+  if (startComment >= comments.length) {
+    startComment = comments.length;
+
+    modalPictureCommentShown.textContent = comments.length;
+    modalPictureCommentTotal.textContent = comments.length;
+
+    renderComment(comments);
+
+    modalPictureCommentsLoader.classList.add('hidden');
+    console.log('КОММЕНТОВ МЕНЬШЕ ИЛИ РАВНО 5');
+  } else {
+    modalPictureCommentsLoader.classList.remove('hidden');
+    console.log('КОММЕНТОВ БОЛЬШЕ 5');
+
+    const commentsShown = comments.slice(0, startComment);
+    const commentsShownLength = commentsShown.length;
+
+    renderComment(commentsShown);
+
+    modalPictureCommentShown.textContent = commentsShownLength;
+    modalPictureCommentTotal.textContent = comments.length;
+  }
+
 };
 
 const onCommentsLoaderHandler = (evt) => {
@@ -69,8 +97,8 @@ const renderModal = (currentPicture) => {
   const picturesIndex = pictures.findIndex((item) => Number(item.id) === Number(currentPicture.dataset.index));
   picture = pictures[picturesIndex];
 
-  // console.log(picture);
-  // console.log(picture.comments);
+  console.log('ОБЪЕКТ К ЭТОМУ DOM-ЭЛЕМЕНТУ -->'); // Вывод объекта по клику
+  console.log(picture); // Вывод объекта по клику
 
   modalPictureImg.src = picture.url;
   modalPictureLikes.textContent = picture.likes;
@@ -93,8 +121,6 @@ const onDocumentKeydownEscape = (evt) => {
 const onModalPictureHandler = (evt) => {
   const currentPicture = evt.target.closest('.picture');
   if (currentPicture) {
-    // console.log(currentPicture); // Вывод DOM-элемент миниатюры по клику
-
     openModal(currentPicture);
 
     picturesList.removeEventListener('click', onModalPictureHandler);
@@ -102,21 +128,21 @@ const onModalPictureHandler = (evt) => {
 };
 
 function openModal (currentPicture) {
-  // console.log('Открыл окно'); // Вывод сообщения об открытии окна
+  console.log('ОТКРЫТО МОДАЛЬНОЕ ОКНО -->'); // Вывод сообщения об открытии окна
+  console.log(currentPicture); // Вывод DOM-элемента миниатюры по клику
 
   renderModal(currentPicture);
 
   modalHiddenToggle(modalPicture);
   scrollLockToggle();
 
-  // modalPictureCommentsLoader.addEventListener('click', onCommentsHandler(picture.comments));
   document.addEventListener('keydown', onDocumentKeydownEscape);
 }
 
 function closeModal () {
-  // console.log('Закрыл окно'); // Вывод сообщения о закрытии окна
+  console.log('<-- ЗАКРЫТО МОДАЛЬНОЕ ОКНО'); // Вывод сообщения о закрытии окна
 
-  // clearComments();
+  clearComments();
   modalHiddenToggle(modalPicture);
   scrollLockToggle();
 
