@@ -19,7 +19,7 @@ function openModal () {
 
   document.addEventListener('keydown', onDocumentKeydownEscape);
   console.log('ЗАГРУЗКА КАРТИНКИ -->');
-};
+}
 
 function closeModal () {
   modalHiddenToggle(formOverlay);
@@ -28,7 +28,7 @@ function closeModal () {
   document.removeEventListener('keydown', onDocumentKeydownEscape);
   formInput.value = '';
   console.log('<-- ЗАКРЫТО МОДАЛЬНОЕ ОКНО');
-};
+}
 
 formInput.addEventListener('change', () => {
   openModal();
