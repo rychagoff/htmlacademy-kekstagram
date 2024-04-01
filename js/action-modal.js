@@ -33,10 +33,10 @@ const commentsFragment = document.createDocumentFragment();
 
 const clearComments = () => {
   startComment = 0;
+  modalPictureComments.innerHTML = '';
 };
 
 const renderComment = (comments) => {
-
   comments.forEach(({avatar, name, message}) => {
     const comment = modalPictureCommentTemplate.cloneNode(true);
     const commentAvatar = comment.querySelector('.social__picture');
