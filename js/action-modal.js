@@ -31,11 +31,15 @@ let startComment = START_COMMENTS;
 
 const commentsFragment = document.createDocumentFragment();
 
+// Функция очистки комментариев при закрытии модального окна
+// Обнуляет переменную, которая отвечает за тот индекс с которого начинается рендер комменатриев
+// Очищает DOM-список комментариев
 const clearComments = () => {
   startComment = 0;
   modalPictureComments.innerHTML = '';
 };
 
+// Функция рендера комментария и добавления его в DOM-список комментариев
 const renderComment = (comments) => {
   comments.forEach(({avatar, name, message}) => {
     const comment = modalPictureCommentTemplate.cloneNode(true);
@@ -52,6 +56,10 @@ const renderComment = (comments) => {
   modalPictureComments.append(commentsFragment);
 };
 
+// Функция проверки и рендера всех комментариев
+// Проверяем сколько комментов уже отрендерено и обновляем счетчик комментариев
+// Если отрендерены все комменты - скрывает кнопку "Загрузить еще"
+// Если нет - рендерим дальше
 const renderComments = (comments) => {
   console.log('МАССИВ КОММЕНТАРИЕВ ЭТОГО DOM-ЭЛЕМЕНТА');
   console.log(comments); // Вывод массива объектов-комментариев
@@ -81,7 +89,6 @@ const renderComments = (comments) => {
     modalPictureCommentShown.textContent = commentsShownLength;
     modalPictureCommentTotal.textContent = comments.length;
   }
-
 };
 
 const onCommentsLoaderHandler = (evt) => {
