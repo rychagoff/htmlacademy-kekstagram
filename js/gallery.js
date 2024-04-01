@@ -1,5 +1,4 @@
 import { getPhotos } from './data.js';
-// import { modalOpenHandler } from './action-modal.js';
 
 // Ищем контейнер для изображений
 const picturesList = document.querySelector('.pictures');
