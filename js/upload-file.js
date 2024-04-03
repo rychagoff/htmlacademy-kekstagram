@@ -5,11 +5,19 @@ const formInput = form.querySelector('.img-upload__input');
 const formOverlay = form.querySelector('.img-upload__overlay');
 const formCancel = form.querySelector('.img-upload__cancel');
 
+const formHashtag = form.querySelector('.text__hashtags');
+const formComment = form.querySelector('.text__description');
+
 // Обработчик, который вызывает функцию закрытия модального окна клавишей ESC
 const onDocumentKeydownEscape = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeModal();
+
+    if (document.activeElement === formHashtag || document.activeElement === formComment) {
+      evt.stopPropagation();
+    } else {
+      closeModal();
+    }
   }
 };
 

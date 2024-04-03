@@ -1,5 +1,6 @@
 const form = document.querySelector('.img-upload__form');
 const formHashtag = form.querySelector('.text__hashtags');
+// const formComment = form.querySelector('.text__description');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -15,6 +16,7 @@ const pristine = new Pristine(form, {
 const isValidateHashtag = (hashtag) => {
   const hashtagItem = /^#[a-zа-я0-9ё]{2,19}$/i;
   return hashtagItem.test(hashtag.trim());
+  // return hashtagItem.test(hashtag);
 };
 
 // console.log(isValidateHashtag('#Хэштег')); // true
@@ -22,17 +24,12 @@ const isValidateHashtag = (hashtag) => {
 // console.log(isValidateHashtag('Хэштег')); // false
 // console.log(isValidateHashtag('#Я')); // false
 
-// Функция проверки всех хэштегов на соблюдение условий регулярного выражения в функции 'isValidateHashtag'
-const isValidateAllHashtags = (hashtags) => hashtags.trim().split(' ').every(isValidateHashtag);
+// const isValidateSpaceHashtags = (hashtags) => hashtags.slice(1).includes('#');
+// console.log(isValidateHashtag('#Хэштег #Хэштег'));
 
-// Функция проверки дубликатов хэштегов
-// Метод 'size' возвращает длину массива 'hashtags' без учета повторений
-// Сравниваем длину массива без повторения с длиной исходного массива
-// Выводит true - если длины совпадают,а дубликатов нет и false - если дубликаты есть
-const hasDuplicateValidate = (hashtags) => {
-  const setHashtags = new Set(hashtags.trim().split(' '));
-  return setHashtags.size === hashtags.trim().split(' ').length;
-};
+// Функция проверки всех хэштегов на соблюдение условий регулярного выражения в функции 'isValidateHashtag'
+// const isValidateAllHashtags = (hashtags) => hashtags.trim().split(/\s+/).every(isValidateHashtag);
+const isValidateAllHashtags = (hashtags) => hashtags.split(/\s+/).every(isValidateHashtag);
 
 // console.log(hasDuplicateValidate('Значение этого выражения в JavaScript будет "искать такси". Почему?'));
 // console.log(hasDuplicateValidate('Значение этого JavaScript выражения в JavaScript будет "искать такси". Почему?'));
@@ -40,11 +37,22 @@ const hasDuplicateValidate = (hashtags) => {
 // Функция проверки длины массива, полученного из строки методом split
 // По ТЗ в поле ввода хэштеги разделяются пробелами, хэштегов должно быть не больше 5
 // Выводит true - если хэштегов меньше или равно 5 и false - если хэштегов больше 5
-const isValidateTotalHashtags = (hashtags) => hashtags.split(' ').length <= 5;
+const isValidateTotalHashtags = (hashtags) => hashtags.split(/\s+/).length <= 5;
 
-// console.log(isValidateTotalHashtags('Значение этого выражения в JavaScript будет "искат ьтакси". Почему?'));
+// console.log(isValidateTotalHashtags('Значение этого выражения в    JavaScript будет "искат    ьтакси". Почему?'));
 // console.log(isValidateTotalHashtags('Значение этого выражения меньше'));
 
+// Функция проверки дубликатов хэштегов
+// Метод 'size' возвращает длину массива 'hashtags' без учета повторений
+// Сравниваем длину массива без повторения с длиной исходного массива
+// Выводит true - если длины совпадают,а дубликатов нет и false - если дубликаты есть
+const hasDuplicateValidate = (hashtags) => {
+  const setHashtags = new Set(hashtags.toLowerCase().split(/\s+/));
+  // return setHashtags.size === hashtags.trim().split(/\s+/).length;
+  return setHashtags.size === hashtags.split(/\s+/).length;
+};
+
+// pristine.addValidator((formHashtag), isValidateSpaceHashtags, 'Хэштеги разделяются пробелами');
 pristine.addValidator((formHashtag), isValidateAllHashtags, 'Введен невалидный хештег');
 pristine.addValidator((formHashtag), hasDuplicateValidate, 'Хэштеги повторяются');
 pristine.addValidator((formHashtag), isValidateTotalHashtags, 'Превышено количество хэштегов');
@@ -55,6 +63,7 @@ form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     console.log('НЕ ВАЛИДНО');
   } else {
+    form.submit();
     console.log('ВАЛИДНО');
   }
 });
