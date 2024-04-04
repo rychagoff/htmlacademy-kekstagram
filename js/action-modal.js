@@ -61,8 +61,8 @@ const renderComment = (comments) => {
 // Если отрендерены все комменты - скрывает кнопку "Загрузить еще"
 // Если нет - рендерим дальше
 const renderComments = (comments) => {
-  console.log('МАССИВ КОММЕНТАРИЕВ ЭТОГО DOM-ЭЛЕМЕНТА');
-  console.log(comments); // Вывод массива объектов-комментариев
+  // console.log('МАССИВ КОММЕНТАРИЕВ ЭТОГО DOM-ЭЛЕМЕНТА');
+  // console.log(comments); // Вывод массива объектов-комментариев
 
   modalPictureComments.innerHTML = '';
 
@@ -76,10 +76,10 @@ const renderComments = (comments) => {
     renderComment(comments);
 
     modalPictureCommentsLoader.classList.add('hidden');
-    console.log('КОММЕНТОВ МЕНЬШЕ ИЛИ РАВНО 5');
+    // console.log('КОММЕНТОВ МЕНЬШЕ ИЛИ РАВНО 5');
   } else {
     modalPictureCommentsLoader.classList.remove('hidden');
-    console.log('КОММЕНТОВ БОЛЬШЕ 5');
+    // console.log('КОММЕНТОВ БОЛЬШЕ 5');
 
     const commentsShown = comments.slice(0, startComment);
     const commentsShownLength = commentsShown.length;
@@ -94,7 +94,7 @@ const renderComments = (comments) => {
 const onCommentsLoaderHandler = (evt) => {
   evt.preventDefault();
   const comments = picture.comments;
-  console.log(comments);
+  // console.log(comments);
   renderComments(comments);
 };
 
@@ -104,8 +104,8 @@ const renderModal = (currentPicture) => {
   const picturesIndex = pictures.findIndex((item) => Number(item.id) === Number(currentPicture.dataset.index));
   picture = pictures[picturesIndex];
 
-  console.log('ОБЪЕКТ К ЭТОМУ DOM-ЭЛЕМЕНТУ -->'); // Вывод объекта по клику
-  console.log(picture); // Вывод объекта по клику
+  // console.log('ОБЪЕКТ К ЭТОМУ DOM-ЭЛЕМЕНТУ -->'); // Вывод объекта по клику
+  // console.log(picture); // Вывод объекта по клику
 
   modalPictureImg.src = picture.url;
   modalPictureLikes.textContent = picture.likes;
@@ -135,8 +135,8 @@ const onModalPictureHandler = (evt) => {
 };
 
 function openModal (currentPicture) {
-  console.log('ОТКРЫТО МОДАЛЬНОЕ ОКНО -->'); // Вывод сообщения об открытии окна
-  console.log(currentPicture); // Вывод DOM-элемента миниатюры по клику
+  // console.log('ОТКРЫТО МОДАЛЬНОЕ ОКНО -->'); // Вывод сообщения об открытии окна
+  // console.log(currentPicture); // Вывод DOM-элемента миниатюры по клику
 
   renderModal(currentPicture);
 
@@ -147,7 +147,7 @@ function openModal (currentPicture) {
 }
 
 function closeModal () {
-  console.log('<-- ЗАКРЫТО МОДАЛЬНОЕ ОКНО'); // Вывод сообщения о закрытии окна
+  // console.log('<-- ЗАКРЫТО МОДАЛЬНОЕ ОКНО'); // Вывод сообщения о закрытии окна
 
   clearComments();
   modalHiddenToggle(modalPicture);

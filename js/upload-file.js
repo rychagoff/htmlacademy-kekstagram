@@ -26,7 +26,7 @@ function openModal () {
   scrollLockToggle();
 
   document.addEventListener('keydown', onDocumentKeydownEscape);
-  console.log('ЗАГРУЗКА КАРТИНКИ -->');
+  // console.log('ЗАГРУЗКА КАРТИНКИ -->');
 }
 
 function closeModal () {
@@ -35,7 +35,7 @@ function closeModal () {
 
   document.removeEventListener('keydown', onDocumentKeydownEscape);
   formInput.value = '';
-  console.log('<-- ЗАКРЫТО МОДАЛЬНОЕ ОКНО');
+  // console.log('<-- ЗАКРЫТО МОДАЛЬНОЕ ОКНО');
 }
 
 formInput.addEventListener('change', () => {
