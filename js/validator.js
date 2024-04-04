@@ -1,6 +1,6 @@
 const form = document.querySelector('.img-upload__form');
 const formHashtag = form.querySelector('.text__hashtags');
-// const formComment = form.querySelector('.text__description');
+const formComment = form.querySelector('.text__description');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -39,6 +39,11 @@ const isValidateAllHashtags = (hashtags) => hashtags.split(/\s+/).every(isValida
 // Выводит true - если хэштегов меньше или равно 5 и false - если хэштегов больше 5
 const isValidateTotalHashtags = (hashtags) => hashtags.split(/\s+/).length <= 5;
 
+// Функция проверки длины комментария
+// По ТЗ длина комментария должна быть не больше 140 символов
+// Выводит true - если комментарий короче 140 символов и false - если длиннее
+const isValidateComment = (comment) => comment.length <= 140;
+
 // console.log(isValidateTotalHashtags('Значение этого выражения в    JavaScript будет "искат    ьтакси". Почему?'));
 // console.log(isValidateTotalHashtags('Значение этого выражения меньше'));
 
@@ -56,6 +61,7 @@ const hasDuplicateValidate = (hashtags) => {
 pristine.addValidator((formHashtag), isValidateAllHashtags, 'Введен невалидный хештег');
 pristine.addValidator((formHashtag), hasDuplicateValidate, 'Хэштеги повторяются');
 pristine.addValidator((formHashtag), isValidateTotalHashtags, 'Превышено количество хэштегов');
+pristine.addValidator((formComment), isValidateComment, 'Максимальная длина 140 символов');
 
 form.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
