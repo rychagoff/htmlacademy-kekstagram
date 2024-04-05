@@ -1,4 +1,5 @@
 import { isEscapeKey, modalHiddenToggle, scrollLockToggle } from './util.js';
+import { resetEffect } from './photo-effects.js';
 
 const form = document.querySelector('.img-upload__form');
 const formInput = form.querySelector('.img-upload__input');
@@ -26,6 +27,7 @@ function openModal () {
   scrollLockToggle();
 
   document.addEventListener('keydown', onDocumentKeydownEscape);
+  resetEffect();
   // console.log('ЗАГРУЗКА КАРТИНКИ -->');
 }
 

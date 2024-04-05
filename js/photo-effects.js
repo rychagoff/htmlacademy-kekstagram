@@ -1,44 +1,120 @@
+const photoEffectPreview = document.querySelector('.img-upload__preview img');
 const photoEffectRange = document.querySelector('.img-upload__effect-level');
 const photoEffectRangeValue = photoEffectRange.querySelector('.effect-level__value');
 const photoEffectRangeSlider = photoEffectRange.querySelector('.effect-level__slider');
-
 const photoEffectsList = document.querySelector('.effects__list');
 
-const slider = photoEffectRangeSlider;
-// photoEffectRangeValue.value = 1;
+const EFFECTS = {
+  chrome: 'grayscale',
+  sepia: 'sepia',
+  marvin: 'invert',
+  phobos: 'blur',
+  heat: 'brightness'
+};
 
-noUiSlider.create(slider, {
-  start: 1,
+const UNITS = {
+  number: '',
+  px: 'px',
+  persent: '%'
+};
+
+const slider = noUiSlider.create(photoEffectRangeSlider, {
   range: {
     'min': 0,
     'max': 1
   },
+  start: 1,
   step: 0.1,
   connect: 'lower',
   format: {
-    to: function(value) {
+    to: function (value) {
       if (Number.isInteger(value)) {
-        value.toFixed(0);
+        return value.toFixed(0);
       }
-      value.toFixed(1);
+      return value.toFixed(1);
     },
-    from: function(value) {
+    from: function (value) {
       return parseFloat(value);
-    }
-  }
+    },
+  },
 });
 
-slider.noUiSlider.on('update', () => {
-  photoEffectRangeValue.value = slider.noUiSlider.get();
-});
+const updateOptionsAndEffects = (min, max, start, step, effect, unit) => {
+  slider.updateOptions({
+    range: {
+      min,
+      max
+    },
+    start,
+    step
+  });
+  slider.on('update', () => {
+    photoEffectRangeValue.value = slider.get();
+    photoEffectPreview.style.filter = `${effect}(${photoEffectRangeValue.value}${unit})`;
+  });
+};
+
+// const updateOptionsSlider = (min, max, start, step) => {
+//   slider.updateOptions({
+//     range: {
+//       min,
+//       max
+//     },
+//     start,
+//     step
+//   });
+// };
+
+// const updateEffect = (effect) => {
+//   slider.on('update', () => {
+//     photoEffectRangeValue.value = slider.get();
+//     photoEffectPreview.style.filter = `${effect}(${photoEffectRangeValue.value})`;
+//   });
+// };
 
 photoEffectsList.addEventListener('change', (evt) => {
-  const effect = evt.target.closest('.effects__radio');
-  switch (effect.id) {
-    case 'effect-none':
-      console.log('ОРИГИНАЛ');
+  const effect = evt.target.value;
+
+  if (effect === 'none') {
+    photoEffectPreview.style.filter = 'none';
+    photoEffectRange.classList.add('hidden');
+    console.log('Выбрано оригинальное изображение');
+  } else {
+    photoEffectRange.classList.remove('hidden');
+  }
+
+  switch (effect) {
+    case 'chrome':
+      updateOptionsAndEffects(0, 1, 1, 0.1, EFFECTS[effect], UNITS.number);
+      console.log(`Выбран эффект - ${effect}. Значение в CSS: ${EFFECTS[effect]}`);
+      // updateEffect(EFFECTS[effect]);
       break;
-    default:
-      console.log('НЕ ОРИГИНАЛ');
+    case 'sepia':
+      updateOptionsAndEffects(0, 1, 1, 0.1, EFFECTS[effect], UNITS.number);
+      console.log(`Выбран эффект - ${effect}. Значение в CSS: ${EFFECTS[effect]}`);
+      // updateEffect(EFFECTS[effect]);
+      break;
+    case 'marvin':
+      updateOptionsAndEffects(0, 100, 100, 1, EFFECTS[effect], UNITS.persent);
+      console.log(`Выбран эффект - ${effect}. Значение в CSS: ${EFFECTS[effect]}`);
+      // updateEffect(EFFECTS[effect]);
+      break;
+    case 'phobos':
+      updateOptionsAndEffects(0, 3, 3, 0.1, EFFECTS[effect], UNITS.px);
+      console.log(`Выбран эффект - ${effect}. Значение в CSS: ${EFFECTS[effect]}`);
+      // updateEffect(EFFECTS[effect]);
+      break;
+    case 'heat':
+      updateOptionsAndEffects(1, 3, 3, 0.1, EFFECTS[effect], UNITS.number);
+      console.log(`Выбран эффект - ${effect}. Значение в CSS: ${EFFECTS[effect]}`);
+      // updateEffect(EFFECTS[effect]);
+      break;
   }
 });
+
+const resetEffect = () => {
+  photoEffectPreview.style.filter = 'none';
+  photoEffectRange.classList.add('hidden');
+};
+
+export { resetEffect };
