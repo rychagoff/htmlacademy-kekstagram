@@ -15,7 +15,7 @@ const pristine = new Pristine(form, {
 // Хэштэги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом
 const isValidateHashtag = (hashtag) => {
   const hashtagItem = /^#[a-zа-я0-9ё]{1,19}$/i;
-  return hashtagItem.test(hashtag);
+  return hashtag.trim() === '' || hashtagItem.test(hashtag);
 };
 
 // console.log(isValidateHashtag('#Хэштег')); // true
@@ -41,8 +41,8 @@ const isValidateComment = (comment) => comment.length <= 140;
 // Сравниваем длину массива без повторения с длиной исходного массива
 // Выводит true - если длины совпадают,а дубликатов нет и false - если дубликаты есть
 const hasDuplicateValidate = (hashtags) => {
-  const setHashtags = new Set(hashtags.toLowerCase().split(/\s+/));
-  return setHashtags.size === hashtags.split(/\s+/).length;
+  const setHashtags = new Set(hashtags.toLowerCase().split(/\s+/).filter((hashtag) => hashtag !== ''));
+  return setHashtags.size === hashtags.split(/\s+/).filter((hashtag) => hashtag !== '').length;
 };
 
 pristine.addValidator((formHashtag), isValidateAllHashtags, 'Введен невалидный хештег');
