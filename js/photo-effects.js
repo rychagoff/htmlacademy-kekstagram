@@ -2,7 +2,6 @@ const photoEffectPreview = document.querySelector('.img-upload__preview img');
 const photoEffectRange = document.querySelector('.img-upload__effect-level');
 const photoEffectRangeValue = photoEffectRange.querySelector('.effect-level__value');
 const photoEffectRangeSlider = photoEffectRange.querySelector('.effect-level__slider');
-const photoEffectsList = document.querySelector('.effects__list');
 
 const EFFECTS = {
   chrome: 'grayscale',
@@ -13,7 +12,6 @@ const EFFECTS = {
 };
 
 const UNITS = {
-  number: '',
   px: 'px',
   persent: '%'
 };
@@ -39,7 +37,7 @@ const slider = noUiSlider.create(photoEffectRangeSlider, {
   },
 });
 
-const updateOptionsAndEffects = (min, max, start, step, effect, unit) => {
+const updateOptionsAndEffects = (min, max, start, step, effect, unit = '') => {
   slider.updateOptions({
     range: {
       min,
@@ -54,25 +52,7 @@ const updateOptionsAndEffects = (min, max, start, step, effect, unit) => {
   });
 };
 
-// const updateOptionsSlider = (min, max, start, step) => {
-//   slider.updateOptions({
-//     range: {
-//       min,
-//       max
-//     },
-//     start,
-//     step
-//   });
-// };
-
-// const updateEffect = (effect) => {
-//   slider.on('update', () => {
-//     photoEffectRangeValue.value = slider.get();
-//     photoEffectPreview.style.filter = `${effect}(${photoEffectRangeValue.value})`;
-//   });
-// };
-
-photoEffectsList.addEventListener('change', (evt) => {
+const changeEffect = (evt) => {
   const effect = evt.target.value;
 
   if (effect === 'none') {
@@ -85,12 +65,12 @@ photoEffectsList.addEventListener('change', (evt) => {
 
   switch (effect) {
     case 'chrome':
-      updateOptionsAndEffects(0, 1, 1, 0.1, EFFECTS[effect], UNITS.number);
+      updateOptionsAndEffects(0, 1, 1, 0.1, EFFECTS[effect]);
       console.log(`Выбран эффект - ${effect}. Значение в CSS: ${EFFECTS[effect]}`);
       // updateEffect(EFFECTS[effect]);
       break;
     case 'sepia':
-      updateOptionsAndEffects(0, 1, 1, 0.1, EFFECTS[effect], UNITS.number);
+      updateOptionsAndEffects(0, 1, 1, 0.1, EFFECTS[effect]);
       console.log(`Выбран эффект - ${effect}. Значение в CSS: ${EFFECTS[effect]}`);
       // updateEffect(EFFECTS[effect]);
       break;
@@ -105,16 +85,16 @@ photoEffectsList.addEventListener('change', (evt) => {
       // updateEffect(EFFECTS[effect]);
       break;
     case 'heat':
-      updateOptionsAndEffects(1, 3, 3, 0.1, EFFECTS[effect], UNITS.number);
+      updateOptionsAndEffects(1, 3, 3, 0.1, EFFECTS[effect]);
       console.log(`Выбран эффект - ${effect}. Значение в CSS: ${EFFECTS[effect]}`);
       // updateEffect(EFFECTS[effect]);
       break;
   }
-});
+};
 
 const resetEffect = () => {
   photoEffectPreview.style.filter = 'none';
   photoEffectRange.classList.add('hidden');
 };
 
-export { resetEffect };
+export { changeEffect, resetEffect };
