@@ -1,3 +1,5 @@
+const ALERT_SHOW_TIME = 5000;
+
 // Получаем случайное число из диапазона от min до max
 
 const getRandom = function(min, max) {
@@ -32,14 +34,21 @@ const getRandomId = function(min, max) {
 
 // Проверяем, нажата ли клавиша ESC при закрытии модального окна
 
-const isEscapeKey = function(evt) {
-  return evt.key === 'Escape';
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+// Обработчик, который вызывает функцию закрытия модального окна клавишей ESC
+const onDocumentKeydownEscape = (callback) => (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    callback();
+  }
 };
 
-// Проверяем, нажата ли клавиша ENTER при открытии модального окна
-
-// const isEnterKey = function(evt) {
-//   return evt.key === 'Enter';
+// // Обработчик, который отменяет функцию закрытия модального окна клавишей ESC
+// const onKeyStopPropagation = (evt) => {
+//   if (isEscapeKey) {
+//     evt.stopPropagation();
+//   }
 // };
 
 // Открытие и закрытие модального окна
@@ -54,4 +63,17 @@ const scrollLockToggle = () => {
   document.body.classList.toggle('modal-open');
 };
 
-export { getRandom, getRandomElement, getRandomId, isEscapeKey, modalHiddenToggle, scrollLockToggle };
+const showAlert = (message) => {
+  const alertTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+  const alertElement = alertTemplate.cloneNode(true);
+
+  alertElement.querySelector('.data-error__title').textContent = message;
+
+  document.body.append(alertElement);
+
+  setTimeout(() => {
+    alertElement.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, modalHiddenToggle, scrollLockToggle, showAlert };
