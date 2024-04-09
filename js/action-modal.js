@@ -1,5 +1,6 @@
 import { isEscapeKey, modalHiddenToggle, scrollLockToggle } from './util.js';
-import { pictures, picturesList } from './gallery.js';
+// import { pictures, picturesList } from './gallery.js';
+import { picturesList } from './gallery.js';
 import { START_COMMENTS, COMMENTS_STEP } from './data.js';
 
 // Ищем модальное окно
