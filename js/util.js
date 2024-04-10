@@ -76,4 +76,14 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, modalHiddenToggle, scrollLockToggle, showAlert };
+const showError = (message) => {
+  const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  const errorElement = errorTemplate.cloneNode(true);
+  // const errorButton = errorElement.querySelector('.error__button');
+
+  errorElement.querySelector('.error__title').textContent = message;
+
+  document.body.append(errorElement);
+};
+
+export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, modalHiddenToggle, scrollLockToggle, showAlert, showError };

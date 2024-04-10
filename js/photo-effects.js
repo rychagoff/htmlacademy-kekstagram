@@ -1,3 +1,6 @@
+import { formInput } from './upload-form';
+
+const photoEffectsList = document.querySelector('.effects__list');
 const photoEffectPreview = document.querySelector('.img-upload__preview img');
 const photoEffectRange = document.querySelector('.img-upload__effect-level');
 const photoEffectRangeValue = photoEffectRange.querySelector('.effect-level__value');
@@ -96,5 +99,11 @@ const resetEffect = () => {
   photoEffectPreview.style.filter = 'none';
   photoEffectRange.classList.add('hidden');
 };
+
+formInput.addEventListener('change', () => {
+  photoEffectPreview.style.filter = 'none';
+  photoEffectRange.classList.add('hidden');
+  photoEffectsList.addEventListener('change', changeEffect);
+});
 
 export { changeEffect, resetEffect };
