@@ -14,7 +14,7 @@ import { closeUploadFormModal } from './upload-form.js';
 // import './action-modal.js';
 // import './photo-upload.js';
 import './photo-scale.js';
-// import './photo-effects.js';
+import './photo-effects.js';
 // import './validator.js';
 
 getData()
