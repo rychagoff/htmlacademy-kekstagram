@@ -27,6 +27,7 @@ function openModal(modal) {
 
   // document.addEventListener('keydown', onDocumentKeydownEscapeHandler);
   console.log('ОТКРЫТО МОДАЛЬНОЕ ОКНО -->');
+
 }
 
 function closeModal(modal) {
