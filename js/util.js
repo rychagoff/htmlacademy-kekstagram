@@ -1,5 +1,5 @@
 // Получаем случайное число из диапазона от min до max
-
+/**/
 const getRandom = function(min, max) {
   const randomMin = Math.ceil(min);
   const randomMax = Math.floor(max);
