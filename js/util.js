@@ -1,3 +1,5 @@
+const ALERT_SHOW_TIME = 5000;
+
 // Получаем случайное число из диапазона от min до max
 
 const getRandom = function(min, max) {
@@ -36,11 +38,14 @@ const isEscapeKey = function(evt) {
   return evt.key === 'Escape';
 };
 
-// Проверяем, нажата ли клавиша ENTER при открытии модального окна
+// Обработчик, который вызывает функцию закрытия модального окна клавишей ESC
 
-// const isEnterKey = function(evt) {
-//   return evt.key === 'Enter';
-// };
+const onDocumentKeydownEscape = (callback) => (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    callback();
+  }
+};
 
 // Открытие и закрытие модального окна
 
@@ -54,4 +59,31 @@ const scrollLockToggle = () => {
   document.body.classList.toggle('modal-open');
 };
 
-export { getRandom, getRandomElement, getRandomId, isEscapeKey, modalHiddenToggle, scrollLockToggle };
+// Функция отображения ошибки при некорректной загрузке данных
+
+const showAlert = (message) => {
+  const alertTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+  const alertElement = alertTemplate.cloneNode(true);
+
+  alertElement.querySelector('.data-error__title').textContent = message;
+
+  document.body.append(alertElement);
+
+  setTimeout(() => {
+    alertElement.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+// Функция отображения ошибки при некорректной отправке данных
+
+const showError = (message) => {
+  const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  const errorElement = errorTemplate.cloneNode(true);
+  // const errorButton = errorElement.querySelector('.error__button');
+
+  errorElement.querySelector('.error__title').textContent = message;
+
+  document.body.append(errorElement);
+};
+
+export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, modalHiddenToggle, scrollLockToggle, showAlert, showError };

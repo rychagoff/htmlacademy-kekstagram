@@ -1,13 +1,9 @@
-// import { getPhotos } from './data.js';
-
 // Ищем контейнер для изображений
 const picturesList = document.querySelector('.pictures');
 // Ищем шаблон
 const pictureTemplate = document.querySelector('#picture');
 // Ищем элемент шаблона
 const pictureTemplateItem = pictureTemplate.content.querySelector('.picture');
-
-// const pictures = getPhotos();
 
 const getGallery = (gallery) => {
   const picturesFragment = document.createDocumentFragment();
