@@ -59,6 +59,43 @@ const scrollLockToggle = () => {
   document.body.classList.toggle('modal-open');
 };
 
+// Функция отображения сообщение при успешной отправке данных
+
+const showSuccess = (message) => {
+  const formSuccessTemplate = document.querySelector('#success');
+  const formSuccess = formSuccessTemplate.content.querySelector('.success');
+
+  const success = formSuccess.cloneNode(true);
+  const formSuccessTitle = success.querySelector('.success__title');
+  const formSuccessButton = success.querySelector('.success__button');
+
+  formSuccessTitle.textContent = message;
+  document.body.append(success);
+
+  const onSuccessKeydownEscapeHandler = onDocumentKeydownEscape(closeSuccess);
+  // const closeSuccessHandler = () => {
+  //   closeSuccess();
+  // };
+
+  success.addEventListener('click', (evt) => {
+    if (!evt.target.closest('.success__inner')) {
+      closeSuccess();
+    }
+  });
+
+  formSuccessButton.addEventListener('click', () => {
+    closeSuccess();
+  });
+
+  document.addEventListener('keydown', onSuccessKeydownEscapeHandler);
+
+  function closeSuccess() {
+    success.remove();
+    document.removeEventListener('keydown', onSuccessKeydownEscapeHandler);
+  }
+  // formSuccessButton.addEventListener('click', closeSuccessHandler);
+};
+
 // Функция отображения ошибки при некорректной загрузке данных
 
 const showAlert = (message) => {
@@ -86,4 +123,4 @@ const showError = (message) => {
   document.body.append(errorElement);
 };
 
-export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, modalHiddenToggle, scrollLockToggle, showAlert, showError };
+export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, modalHiddenToggle, scrollLockToggle, showSuccess, showAlert, showError };

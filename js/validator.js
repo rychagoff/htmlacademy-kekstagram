@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import { showError } from './util.js';
+import { showSuccess, showError } from './util.js';
 
 const form = document.querySelector('.img-upload__form');
 const formHashtag = form.querySelector('.text__hashtags');
@@ -7,8 +7,8 @@ const formComment = form.querySelector('.text__description');
 const formSubmitButton = form.querySelector('.img-upload__submit');
 
 const SubmitButtonText = {
-  IDLE: 'Отправить',
-  SENDING: 'Отправляем...'
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
 };
 
 const pristine = new Pristine(form, {
@@ -79,19 +79,17 @@ const setUserFormSubmit = (onSuccess) => {
     if (isValid) {
       blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then(onSuccess)
+        // .then(onSuccess)
+        .then(() => {
+          onSuccess();
+          showSuccess('Изображение успешно загружено');
+        })
         .catch((err) => {
           console.log('НЕ ВАЛИДНО');
           showError(err.message);
         })
         .finally(unblockSubmitButton);
     }
-    // if (!isValid) {
-    //   console.log('НЕ ВАЛИДНО');
-    // } else {
-    //   console.log('ВАЛИДНО');
-    //   form.submit();
-    // }
   });
 };
 
