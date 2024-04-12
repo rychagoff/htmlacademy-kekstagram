@@ -1,6 +1,4 @@
 const photoScale = document.querySelector('.img-upload__scale');
-const photoScaleSmaller = photoScale.querySelector('.scale__control--smaller');
-const photoScaleBigger = photoScale.querySelector('.scale__control--bigger');
 const photoScaleValue = photoScale.querySelector('.scale__control--value');
 
 const photoPreview = document.querySelector('.img-upload__preview img');
@@ -31,5 +29,4 @@ const scaleUp = () => {
   }
 };
 
-photoScaleSmaller.addEventListener('click', scaleDown);
-photoScaleBigger.addEventListener('click', scaleUp);
+export { scaleUp, scaleDown };

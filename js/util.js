@@ -1,7 +1,7 @@
 const ALERT_SHOW_TIME = 5000;
 
 // Получаем случайное число из диапазона от min до max
-/**/
+
 const getRandom = function(min, max) {
   const randomMin = Math.ceil(min);
   const randomMax = Math.floor(max);
@@ -34,22 +34,18 @@ const getRandomId = function(min, max) {
 
 // Проверяем, нажата ли клавиша ESC при закрытии модального окна
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = function(evt) {
+  return evt.key === 'Escape';
+};
 
 // Обработчик, который вызывает функцию закрытия модального окна клавишей ESC
+
 const onDocumentKeydownEscape = (callback) => (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     callback();
   }
 };
-
-// // Обработчик, который отменяет функцию закрытия модального окна клавишей ESC
-// const onKeyStopPropagation = (evt) => {
-//   if (isEscapeKey) {
-//     evt.stopPropagation();
-//   }
-// };
 
 // Открытие и закрытие модального окна
 
@@ -63,27 +59,89 @@ const scrollLockToggle = () => {
   document.body.classList.toggle('modal-open');
 };
 
+// Функция отображения сообщение при успешной отправке данных
+
+const showSuccess = (message) => {
+  const formSuccessTemplate = document.querySelector('#success');
+  const formSuccess = formSuccessTemplate.content.querySelector('.success');
+
+  const success = formSuccess.cloneNode(true);
+  const successTitle = success.querySelector('.success__title');
+  const successButton = success.querySelector('.success__button');
+
+  successTitle.textContent = message;
+  document.body.append(success);
+
+  success.addEventListener('click', (evt) => {
+    if (!evt.target.closest('.success__inner')) {
+      closeSuccess();
+    }
+  });
+
+  successButton.addEventListener('click', () => {
+    closeSuccess();
+  });
+  // const closeSuccessHandler = () => {
+  //   closeSuccess();
+  // };
+
+  const onSuccessKeydownEscapeHandler = onDocumentKeydownEscape(closeSuccess);
+  document.addEventListener('keydown', onSuccessKeydownEscapeHandler);
+
+  function closeSuccess() {
+    success.remove();
+    document.removeEventListener('keydown', onSuccessKeydownEscapeHandler);
+  }
+  // successButton.addEventListener('click', closeSuccessHandler);
+};
+
+// Функция отображения ошибки при некорректной загрузке данных
+
 const showAlert = (message) => {
-  const alertTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
-  const alertElement = alertTemplate.cloneNode(true);
+  const formAlertTemplate = document.querySelector('#data-error');
+  const formAlert = formAlertTemplate.content.querySelector('.data-error');
 
-  alertElement.querySelector('.data-error__title').textContent = message;
+  const alert = formAlert.cloneNode(true);
+  const alertTitle = alert.querySelector('.data-error__title');
 
-  document.body.append(alertElement);
+  alertTitle.textContent = message;
+  document.body.append(alert);
 
   setTimeout(() => {
-    alertElement.remove();
+    alert.remove();
   }, ALERT_SHOW_TIME);
 };
 
+// Функция отображения ошибки при некорректной отправке данных
+
 const showError = (message) => {
-  const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  const errorElement = errorTemplate.cloneNode(true);
-  // const errorButton = errorElement.querySelector('.error__button');
+  const formErrorTemplate = document.querySelector('#error');
+  const formError = formErrorTemplate.content.querySelector('.error');
 
-  errorElement.querySelector('.error__title').textContent = message;
+  const error = formError.cloneNode(true);
+  const errorTitle = error.querySelector('.error__title');
+  const errorButton = error.querySelector('.error__button');
 
-  document.body.append(errorElement);
+  errorTitle.textContent = message;
+  document.body.append(error);
+
+  error.addEventListener('click', (evt) => {
+    if (!evt.target.closest('.success__inner')) {
+      closeError();
+    }
+  });
+
+  errorButton.addEventListener('click', () => {
+    closeError();
+  });
+
+  const onErrorKeydownEscapeHandler = onDocumentKeydownEscape(closeError);
+  document.addEventListener('keydown', onErrorKeydownEscapeHandler);
+
+  function closeError() {
+    error.remove();
+    document.removeEventListener('keydown', onErrorKeydownEscapeHandler);
+  }
 };
 
-export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, modalHiddenToggle, scrollLockToggle, showAlert, showError };
+export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, modalHiddenToggle, scrollLockToggle, showSuccess, showAlert, showError };

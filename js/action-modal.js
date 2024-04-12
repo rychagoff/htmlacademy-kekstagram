@@ -1,7 +1,7 @@
-import { onDocumentKeydownEscape } from './util.js';
-import { picturesList } from './gallery.js';
-import { openModal, closeModal } from './util-modal.js';
-import { START_COMMENTS, COMMENTS_STEP } from './data.js';
+import { onDocumentKeydownEscape } from './util.js'; // +++
+import { openModal, closeModal } from './util-modal.js'; // +++
+import { picturesList } from './gallery.js'; // +++
+import { START_COMMENTS, COMMENTS_STEP } from './data.js'; // +++
 
 // Ищем модальное окно
 const modalPicture = document.querySelector('.big-picture');
@@ -31,6 +31,8 @@ let picture = {};
 let startComment = START_COMMENTS;
 
 let onModalPictureHandler;
+let onModalCloseHandler;
+let onPictureCommentsHandler;
 const onDocumentKeydownEscapeHandler = onDocumentKeydownEscape(closePostModal);
 
 const renderModal = (gallery) => {
@@ -57,8 +59,18 @@ const renderModal = (gallery) => {
     }
   };
 
+  onModalCloseHandler = () => {
+    closePostModal();
+  };
+
+  onPictureCommentsHandler = (evt) => {
+    evt.preventDefault();
+    const comments = picture.comments;
+    renderComments(comments);
+  };
+
   // Добавляем обрабочик секции pictures
-  // При клике на секцию pictures вызываем функцию проверки клика
+  // При клике на секцию pictures вызываем функцию проверки клика и открытия модального окна
   picturesList.addEventListener('click', onModalPictureHandler);
 
 };
@@ -77,6 +89,9 @@ function openPostModal() {
 
   picturesList.removeEventListener('click', onModalPictureHandler);
   document.addEventListener('keydown', onDocumentKeydownEscapeHandler);
+  // Добавляем обрабочик закрытия модального окна по крестику
+  modalPictureClose.addEventListener('click', onModalCloseHandler);
+  modalPictureCommentsLoader.addEventListener('click', onPictureCommentsHandler);
 }
 
 function closePostModal() {
@@ -85,6 +100,9 @@ function closePostModal() {
 
   picturesList.addEventListener('click', onModalPictureHandler);
   document.removeEventListener('keydown', onDocumentKeydownEscapeHandler);
+  // Удаляем обрабочик закрытия модального окна по крестику
+  modalPictureClose.removeEventListener('click', onModalCloseHandler);
+  modalPictureCommentsLoader.removeEventListener('click', onPictureCommentsHandler);
 }
 
 function renderModalPhoto() {
@@ -149,120 +167,19 @@ function renderComment(comments) {
   modalPictureComments.append(commentsFragment);
 }
 
-const onCommentsLoaderHandler = (evt) => {
-  evt.preventDefault();
-  const comments = picture.comments;
-  renderComments(comments);
-};
-
-modalPictureCommentsLoader.addEventListener('click', onCommentsLoaderHandler);
-
-// Добавляем обрабочик закрытия модального окна по крестику
-modalPictureClose.addEventListener('click', () => {
-  closePostModal();
-});
-
-export { renderModal };
-
-/*--------------------------------------------------*/
-
-// const commentsFragment = document.createDocumentFragment();
-
-// // Функция очистки комментариев при закрытии модального окна
-// // Обнуляет переменную, которая отвечает за тот индекс с которого начинается рендер комменатриев
-// // Очищает DOM-список комментариев
-// const clearComments = () => {
-//   startComment = 0;
-//   modalPictureComments.innerHTML = '';
-// };
-
-// // Функция рендера комментария и добавления его в DOM-список комментариев
-// const renderComment = (comments) => {
-//   comments.forEach(({avatar, name, message}) => {
-//     const comment = modalPictureCommentTemplate.cloneNode(true);
-//     const commentAvatar = comment.querySelector('.social__picture');
-//     const commentText = comment.querySelector('.social__text');
-
-//     commentAvatar.src = avatar;
-//     commentAvatar.alt = name;
-//     commentText.textContent = message;
-
-//     commentsFragment.append(comment);
-//   });
-
-//   modalPictureComments.append(commentsFragment);
-// };
-
-// // Функция проверки и рендера всех комментариев
-// // Проверяем сколько комментов уже отрендерено и обновляем счетчик комментариев
-// // Если отрендерены все комменты - скрывает кнопку "Загрузить еще"
-// // Если нет - рендерим дальше
-// const renderComments = (comments) => {
-//   // console.log('МАССИВ КОММЕНТАРИЕВ ЭТОГО DOM-ЭЛЕМЕНТА');
-//   // console.log(comments); // Вывод массива объектов-комментариев
-
-//   modalPictureComments.innerHTML = '';
-
-//   startComment += COMMENTS_STEP;
-//   if (startComment >= comments.length) {
-//     startComment = comments.length;
-
-//     modalPictureCommentShown.textContent = comments.length;
-//     modalPictureCommentTotal.textContent = comments.length;
-
-//     renderComment(comments);
-
-//     modalPictureCommentsLoader.classList.add('hidden');
-//     // console.log('КОММЕНТОВ МЕНЬШЕ ИЛИ РАВНО 5');
-//   } else {
-//     modalPictureCommentsLoader.classList.remove('hidden');
-//     // console.log('КОММЕНТОВ БОЛЬШЕ 5');
-
-//     const commentsShown = comments.slice(0, startComment);
-//     const commentsShownLength = commentsShown.length;
-
-//     renderComment(commentsShown);
-
-//     modalPictureCommentShown.textContent = commentsShownLength;
-//     modalPictureCommentTotal.textContent = comments.length;
-//   }
-// };
-
 // const onCommentsLoaderHandler = (evt) => {
 //   evt.preventDefault();
 //   const comments = picture.comments;
-//   // console.log(comments);
 //   renderComments(comments);
 // };
 
-//
-// function openModal(currentPicture) {
-//   // console.log('ОТКРЫТО МОДАЛЬНОЕ ОКНО -->'); // Вывод сообщения об открытии окна
-//   // console.log(currentPicture); // Вывод DOM-элемента миниатюры по клику
-
-//   renderModal(currentPicture);
-
-//   modalHiddenToggle(modalPicture);
-//   scrollLockToggle();
-
-//   document.addEventListener('keydown', onDocumentKeydownEscape);
-// }
-
-// function closeModal(modal) {
-//   // console.log('<-- ЗАКРЫТО МОДАЛЬНОЕ ОКНО'); // Вывод сообщения о закрытии окна
-
-//   clearComments();
-//   modalHiddenToggle(modal);
-//   scrollLockToggle();
-
-//   document.removeEventListener('keydown', onDocumentKeydownEscape);
-//   picturesList.addEventListener('click', onModalPictureHandler);
-// }
-
-//
 // modalPictureCommentsLoader.addEventListener('click', onCommentsLoaderHandler);
 
 // // Добавляем обрабочик закрытия модального окна по крестику
 // modalPictureClose.addEventListener('click', () => {
-//   closeModal(modalPicture);
+//   closePostModal();
 // });
+
+export { renderModal };
+
+/*--------------------------------------------------*/

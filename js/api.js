@@ -16,24 +16,23 @@ const ErrorText = {
 };
 
 const load = (route, errorText = null, method = Method.GET, body = null) =>
-  fetch(`${BASE_URL}${route}`, {method, body})
+  fetch(`${BASE_URL}${route}`,
+    {
+      method,
+      body,
+    }
+  )
     .then((response) => {
       if (!response.ok) {
-        // throw new Error(`Произошла ошибка ${response.status}: ${response.statusText}`);
-        throw new Error();
+        throw new Error(`Произошла ошибка ${response.status}: ${response.statusText}`);
       }
       return response.json();
     })
-    // .catch((err) => {
-    //   throw new Error(errorText ?? err.message);
-    // });
-    .catch(() => {
-      throw new Error(errorText);
+    .catch((err) => {
+      throw new Error(errorText ?? err.message);
     });
 
-// const getData = () => load(Route.GET_DATA);
-const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA);
-
+const getData = () => load(Route.GET_DATA,ErrorText.GET_DATA);
 const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);
 
 export { getData, sendData };
