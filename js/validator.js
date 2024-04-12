@@ -4,6 +4,12 @@ import { showError } from './util.js';
 const form = document.querySelector('.img-upload__form');
 const formHashtag = form.querySelector('.text__hashtags');
 const formComment = form.querySelector('.text__description');
+const formSubmitButton = form.querySelector('.img-upload__submit');
+
+const SubmitButtonText = {
+  IDLE: 'Отправить',
+  SENDING: 'Отправляем...'
+};
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -53,6 +59,16 @@ pristine.addValidator((formHashtag), hasDuplicateValidate, 'Хэштеги по�
 pristine.addValidator((formHashtag), isValidateTotalHashtags, 'Превышено количество хэштегов');
 pristine.addValidator((formComment), isValidateComment, 'Максимальная длина 140 символов');
 
+const blockSubmitButton = () => {
+  formSubmitButton.disabled = true;
+  formSubmitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  formSubmitButton.disabled = false;
+  formSubmitButton.textContent = SubmitButtonText.IDLE;
+};
+
 const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -61,12 +77,14 @@ const setUserFormSubmit = (onSuccess) => {
     console.log(isValid);
 
     if (isValid) {
+      blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(onSuccess)
         .catch((err) => {
           console.log('НЕ ВАЛИДНО');
           showError(err.message);
-        });
+        })
+        .finally(unblockSubmitButton);
     }
     // if (!isValid) {
     //   console.log('НЕ ВАЛИДНО');
