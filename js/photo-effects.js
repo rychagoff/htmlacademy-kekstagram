@@ -54,6 +54,7 @@ const updateOptionsAndEffects = (min, max, start, step, effect, unit = '') => {
 
 const changeEffect = (evt) => {
   const effect = evt.target.value;
+  console.log(effect);
 
   if (effect === 'none') {
     photoEffectPreview.style.filter = 'none';

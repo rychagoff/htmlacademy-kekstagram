@@ -4,8 +4,10 @@ import '../vendor/nouislider/nouislider.css'; // +++
 
 import { getGallery } from './gallery.js'; // +++
 import { renderModal } from './action-modal.js'; // +++
-// import './photo-upload.js';
+import './upload-form.js';
+// import { closeUploadModal } from './upload-form.js';
 // import './photo-scale.js';
+// import './photo-upload.js';
 // import './photo-effects.js';
 // import './validator.js';
 
