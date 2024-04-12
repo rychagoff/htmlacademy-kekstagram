@@ -66,16 +66,11 @@ const showSuccess = (message) => {
   const formSuccess = formSuccessTemplate.content.querySelector('.success');
 
   const success = formSuccess.cloneNode(true);
-  const formSuccessTitle = success.querySelector('.success__title');
-  const formSuccessButton = success.querySelector('.success__button');
+  const successTitle = success.querySelector('.success__title');
+  const successButton = success.querySelector('.success__button');
 
-  formSuccessTitle.textContent = message;
+  successTitle.textContent = message;
   document.body.append(success);
-
-  const onSuccessKeydownEscapeHandler = onDocumentKeydownEscape(closeSuccess);
-  // const closeSuccessHandler = () => {
-  //   closeSuccess();
-  // };
 
   success.addEventListener('click', (evt) => {
     if (!evt.target.closest('.success__inner')) {
@@ -83,44 +78,70 @@ const showSuccess = (message) => {
     }
   });
 
-  formSuccessButton.addEventListener('click', () => {
+  successButton.addEventListener('click', () => {
     closeSuccess();
   });
+  // const closeSuccessHandler = () => {
+  //   closeSuccess();
+  // };
 
+  const onSuccessKeydownEscapeHandler = onDocumentKeydownEscape(closeSuccess);
   document.addEventListener('keydown', onSuccessKeydownEscapeHandler);
 
   function closeSuccess() {
     success.remove();
     document.removeEventListener('keydown', onSuccessKeydownEscapeHandler);
   }
-  // formSuccessButton.addEventListener('click', closeSuccessHandler);
+  // successButton.addEventListener('click', closeSuccessHandler);
 };
 
 // Функция отображения ошибки при некорректной загрузке данных
 
 const showAlert = (message) => {
-  const alertTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
-  const alertElement = alertTemplate.cloneNode(true);
+  const formAlertTemplate = document.querySelector('#data-error');
+  const formAlert = formAlertTemplate.content.querySelector('.data-error');
 
-  alertElement.querySelector('.data-error__title').textContent = message;
+  const alert = formAlert.cloneNode(true);
+  const alertTitle = alert.querySelector('.data-error__title');
 
-  document.body.append(alertElement);
+  alertTitle.textContent = message;
+  document.body.append(alert);
 
   setTimeout(() => {
-    alertElement.remove();
+    alert.remove();
   }, ALERT_SHOW_TIME);
 };
 
 // Функция отображения ошибки при некорректной отправке данных
 
 const showError = (message) => {
-  const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  const errorElement = errorTemplate.cloneNode(true);
-  // const errorButton = errorElement.querySelector('.error__button');
+  const formErrorTemplate = document.querySelector('#error');
+  const formError = formErrorTemplate.content.querySelector('.error');
 
-  errorElement.querySelector('.error__title').textContent = message;
+  const error = formError.cloneNode(true);
+  const errorTitle = error.querySelector('.error__title');
+  const errorButton = error.querySelector('.error__button');
 
-  document.body.append(errorElement);
+  errorTitle.textContent = message;
+  document.body.append(error);
+
+  error.addEventListener('click', (evt) => {
+    if (!evt.target.closest('.success__inner')) {
+      closeError();
+    }
+  });
+
+  errorButton.addEventListener('click', () => {
+    closeError();
+  });
+
+  const onErrorKeydownEscapeHandler = onDocumentKeydownEscape(closeError);
+  document.addEventListener('keydown', onErrorKeydownEscapeHandler);
+
+  function closeError() {
+    error.remove();
+    document.removeEventListener('keydown', onErrorKeydownEscapeHandler);
+  }
 };
 
 export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, modalHiddenToggle, scrollLockToggle, showSuccess, showAlert, showError };
