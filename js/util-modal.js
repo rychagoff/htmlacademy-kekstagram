@@ -7,14 +7,14 @@ function openModal(modal) {
   scrollLockToggle();
   // onDocumentKeydownEscapeHandler = onDocumentKeydownEscape(() => closeModal(modal));
   // document.addEventListener('keydown', onDocumentKeydownEscapeHandler);
-  console.log('ОТКРЫТО МОДАЛЬНОЕ ОКНО -->');
+  // console.log('ОТКРЫТО МОДАЛЬНОЕ ОКНО -->');
 }
 
 function closeModal(modal) {
   modalHiddenToggle(modal);
   scrollLockToggle();
   // document.removeEventListener('keydown', onDocumentKeydownEscapeHandler);
-  console.log('<-- ЗАКРЫТО МОДАЛЬНОЕ ОКНО');
+  // console.log('<-- ЗАКРЫТО МОДАЛЬНОЕ ОКНО');
 }
 
 export { openModal, closeModal };

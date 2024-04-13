@@ -19,7 +19,6 @@ getData()
     showFilters();
     filterSwitch();
     filterPhoto();
-    // changeFilter(() => getGallery(gallery));
   })
   .catch(
     (err) => {
