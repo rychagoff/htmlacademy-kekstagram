@@ -9,11 +9,17 @@ import { renderModal } from './action-modal.js'; // +++
 import { setUserFormSubmit } from './validator.js'; // +++
 import { closeUploadModal } from './upload-form.js'; // +++
 
+import { showFilters, filterSwitch, filterPhoto } from './filter.js'; // +++
+
 getData()
   // .then((response) => response.json())
   .then((gallery) => {
     getGallery(gallery);
     renderModal(gallery);
+    showFilters();
+    filterSwitch();
+    filterPhoto();
+    // changeFilter(() => getGallery(gallery));
   })
   .catch(
     (err) => {
