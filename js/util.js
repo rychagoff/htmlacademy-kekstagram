@@ -47,6 +47,15 @@ const onDocumentKeydownEscape = (callback) => (evt) => {
   }
 };
 
+// Обработчик, который вызывает функцию предотвращения закрытия модального окна клавишей ESC
+// Если фокус на этих полях, окно не закрывается
+
+const onKeyStopPropagation = (evt) => {
+  if (isEscapeKey) {
+    evt.stopPropagation();
+  }
+};
+
 // Открытие и закрытие модального окна
 
 const modalHiddenToggle = (modal) => {
@@ -165,4 +174,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, modalHiddenToggle, scrollLockToggle, showSuccess, showAlert, showError, debounce };
+export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, onKeyStopPropagation, modalHiddenToggle, scrollLockToggle, showSuccess, showAlert, showError, debounce };

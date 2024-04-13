@@ -10,9 +10,15 @@ const MAX_SCALE = 1;
 
 let scaleValue = DEFAULT_SCALE;
 
+const resetScale = () => {
+  photoScaleValue.value = `${DEFAULT_SCALE * 100}%`;
+  photoPreview.style.transform = `scale(${DEFAULT_SCALE})`;
+};
+
 const updateScale = (scale) => {
   photoScaleValue.value = `${scale * 100}%`;
   photoPreview.style.transform = `scale(${scale})`;
+
 };
 
 const scaleDown = () => {
@@ -29,4 +35,4 @@ const scaleUp = () => {
   }
 };
 
-export { scaleUp, scaleDown };
+export { resetScale, scaleUp, scaleDown };
