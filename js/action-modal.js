@@ -44,7 +44,7 @@ const renderModal = (gallery) => {
     const currentPicture = evt.target.closest('.picture');
 
     if (currentPicture) {
-      console.log(currentPicture);
+      // console.log(currentPicture);
       evt.preventDefault();
 
       // В массиве объектов миниаютюр pictures ищем элемент item со значением ключа id
@@ -52,8 +52,8 @@ const renderModal = (gallery) => {
       const picturesIndex = gallery.findIndex((item) => Number(item.id) === Number(currentPicture.dataset.index));
       picture = gallery[picturesIndex];
 
-      console.log('ОБЪЕКТ К ЭТОМУ DOM-ЭЛЕМЕНТУ -->'); // Вывод объекта по клику
-      console.log(picture); // Вывод объекта по клику
+      // console.log('ОБЪЕКТ К ЭТОМУ DOM-ЭЛЕМЕНТУ -->'); // Вывод объекта по клику
+      // console.log(picture); // Вывод объекта по клику
 
       openPostModal();
     }
@@ -118,8 +118,8 @@ function renderModalPhoto() {
 // Если отрендерены все комменты - скрывает кнопку "Загрузить еще"
 // Если нет - рендерим дальше
 function renderComments(comments) {
-  console.log('МАССИВ КОММЕНТАРИЕВ ЭТОГО DOM-ЭЛЕМЕНТА');
-  console.log(comments); // Вывод массива объектов-комментариев
+  // console.log('МАССИВ КОММЕНТАРИЕВ ЭТОГО DOM-ЭЛЕМЕНТА');
+  // console.log(comments); // Вывод массива объектов-комментариев
 
   modalPictureComments.innerHTML = '';
 

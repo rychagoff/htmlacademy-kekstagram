@@ -74,7 +74,7 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
 
     const isValid = pristine.validate();
-    console.log(isValid);
+    // console.log(isValid);
 
     if (isValid) {
       blockSubmitButton();
@@ -85,7 +85,7 @@ const setUserFormSubmit = (onSuccess) => {
           showSuccess('Изображение успешно загружено');
         })
         .catch((err) => {
-          console.log('НЕ ВАЛИДНО');
+          // console.log('НЕ ВАЛИДНО');
           showError(err.message);
         })
         .finally(unblockSubmitButton);
