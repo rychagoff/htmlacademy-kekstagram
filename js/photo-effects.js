@@ -92,6 +92,8 @@ const changeEffect = (evt) => {
 };
 
 const resetEffect = () => {
+  const effectDefault = document.querySelector('#effect-none');
+  effectDefault.checked = true;
   photoPreview.style.filter = 'none';
   photoEffectRange.classList.add('hidden');
 };

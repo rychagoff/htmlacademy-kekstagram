@@ -56,12 +56,6 @@ const onKeyStopPropagation = (evt) => {
   }
 };
 
-// Открытие и закрытие модального окна
-
-const modalHiddenToggle = (modal) => {
-  modal.classList.toggle('hidden');
-};
-
 // Блокировка и разбокировка скролла
 
 const scrollLockToggle = () => {
@@ -104,6 +98,12 @@ const showSuccess = (message) => {
   // successButton.addEventListener('click', closeSuccessHandler);
 };
 
+let isErrorWindowOpen = false;
+const setIsErrorWindowOpen = (value) => {
+  isErrorWindowOpen = value;
+};
+const getIsErrorWindowOpen = () => isErrorWindowOpen;
+
 // Функция отображения ошибки при некорректной загрузке данных
 
 const showAlert = (message) => {
@@ -134,8 +134,10 @@ const showError = (message) => {
   errorTitle.textContent = message;
   document.body.append(error);
 
+  setIsErrorWindowOpen(true);
+
   error.addEventListener('click', (evt) => {
-    if (!evt.target.closest('.success__inner')) {
+    if (!evt.target.closest('.error__inner')) {
       closeError();
     }
   });
@@ -148,10 +150,19 @@ const showError = (message) => {
   document.addEventListener('keydown', onErrorKeydownEscapeHandler);
 
   function closeError() {
+    setIsErrorWindowOpen(false);
     error.remove();
     document.removeEventListener('keydown', onErrorKeydownEscapeHandler);
   }
 };
+
+// Открытие и закрытие модального окна
+
+function modalHiddenToggle (modal) {
+  if (!isErrorWindowOpen) {
+    modal.classList.toggle('hidden');
+  }
+}
 
 // Функция взята из интернета и доработана
 // Источник - https://www.freecodecamp.org/news/javascript-debounce-example
@@ -174,4 +185,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, onKeyStopPropagation, modalHiddenToggle, scrollLockToggle, showSuccess, showAlert, showError, debounce };
+export { getRandom, getRandomElement, getRandomId, isEscapeKey, onDocumentKeydownEscape, onKeyStopPropagation, modalHiddenToggle, scrollLockToggle, showSuccess, getIsErrorWindowOpen, showAlert, showError, debounce };
