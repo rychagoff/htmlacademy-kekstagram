@@ -54,12 +54,10 @@ const updateOptionsAndEffects = (min, max, start, step, effect, unit = '') => {
 
 const changeEffect = (evt) => {
   const effect = evt.target.value;
-  // console.log(effect);
 
   if (effect === 'none') {
     photoPreview.style.filter = 'none';
     photoEffectRange.classList.add('hidden');
-    // console.log('Выбрано оригинальное изображение');
   } else {
     photoEffectRange.classList.remove('hidden');
   }
