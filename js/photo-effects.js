@@ -1,4 +1,4 @@
-const photoEffectPreview = document.querySelector('.img-upload__preview img');
+const photoPreview = document.querySelector('.img-upload__preview img');
 const photoEffectRange = document.querySelector('.img-upload__effect-level');
 const photoEffectRangeValue = photoEffectRange.querySelector('.effect-level__value');
 const photoEffectRangeSlider = photoEffectRange.querySelector('.effect-level__slider');
@@ -48,7 +48,7 @@ const updateOptionsAndEffects = (min, max, start, step, effect, unit = '') => {
   });
   slider.on('update', () => {
     photoEffectRangeValue.value = slider.get();
-    photoEffectPreview.style.filter = `${effect}(${photoEffectRangeValue.value}${unit})`;
+    photoPreview.style.filter = `${effect}(${photoEffectRangeValue.value}${unit})`;
   });
 };
 
@@ -57,7 +57,7 @@ const changeEffect = (evt) => {
   // console.log(effect);
 
   if (effect === 'none') {
-    photoEffectPreview.style.filter = 'none';
+    photoPreview.style.filter = 'none';
     photoEffectRange.classList.add('hidden');
     // console.log('Выбрано оригинальное изображение');
   } else {
@@ -94,7 +94,7 @@ const changeEffect = (evt) => {
 };
 
 const resetEffect = () => {
-  photoEffectPreview.style.filter = 'none';
+  photoPreview.style.filter = 'none';
   photoEffectRange.classList.add('hidden');
 };
 
