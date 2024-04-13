@@ -2,7 +2,7 @@ import { onDocumentKeydownEscape, onKeyStopPropagation } from './util.js'; // ++
 import { openModal, closeModal } from './util-modal.js'; // +++
 import { changeEffect, resetEffect } from './photo-effects.js'; // +++
 import { resetScale, scaleUp, scaleDown } from './photo-scale.js'; // +++
-import { formHashtag, formComment } from './validator.js';
+import { pristine, formHashtag, formComment } from './validator.js';
 
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -39,6 +39,7 @@ function openUploadModal() {
     });
   }
 
+  pristine.reset();
   openModal(formOverlay);
   resetEffect();
   resetScale();

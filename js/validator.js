@@ -93,4 +93,4 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-export { setUserFormSubmit, formHashtag, formComment };
+export { pristine, formHashtag, formComment, setUserFormSubmit };
