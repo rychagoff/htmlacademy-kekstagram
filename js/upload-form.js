@@ -1,4 +1,4 @@
-import { onDocumentKeydownEscape } from './util.js'; // +++
+import { onDocumentKeydownEscape, onKeyStopPropagation } from './util.js'; // +++
 import { openModal, closeModal } from './util-modal.js'; // +++
 import { changeEffect, resetEffect } from './photo-effects.js'; // +++
 import { resetScale, scaleUp, scaleDown } from './photo-scale.js'; // +++
@@ -46,6 +46,8 @@ function openUploadModal() {
   formComment.value = '';
 
   document.addEventListener('keydown', onDocumentKeydownEscapeHandler);
+  formHashtag.addEventListener('keydown', onKeyStopPropagation);
+  formComment.addEventListener('keydown', onKeyStopPropagation);
   formInput.removeEventListener('change', onModalUploadHandler);
   formCancel.addEventListener('click', closeUploadModal);
 
@@ -60,6 +62,8 @@ function closeUploadModal() {
   closeModal(formOverlay);
 
   document.removeEventListener('keydown', onDocumentKeydownEscapeHandler);
+  formHashtag.removeEventListener('keydown', onKeyStopPropagation);
+  formComment.removeEventListener('keydown', onKeyStopPropagation);
   formInput.addEventListener('change', onModalUploadHandler);
   formCancel.removeEventListener('click', closeUploadModal);
 
