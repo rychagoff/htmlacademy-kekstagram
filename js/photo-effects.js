@@ -37,7 +37,7 @@ const slider = noUiSlider.create(photoEffectRangeSlider, {
   },
 });
 
-const updateOptionsAndEffects = (min, max, start, step, effect, unit = '') => {
+const updateOptionsAndEffects = (min, max, start, step, effect = 'none', unit = '') => {
   slider.updateOptions({
     range: {
       min,
@@ -54,10 +54,12 @@ const updateOptionsAndEffects = (min, max, start, step, effect, unit = '') => {
 
 const changeEffect = (evt) => {
   const effect = evt.target.value;
+  evt.checked = true;
 
   if (effect === 'none') {
     photoPreview.style.filter = 'none';
     photoEffectRange.classList.add('hidden');
+    updateOptionsAndEffects(0, 1, 1, 0.1);
   } else {
     photoEffectRange.classList.remove('hidden');
   }
