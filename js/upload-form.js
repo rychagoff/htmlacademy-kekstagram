@@ -1,8 +1,9 @@
-import { onDocumentKeydownEscape, onKeyStopPropagation } from './util.js'; // +++
+import { onDocumentKeydownEscape, onKeyStopPropagation, getIsErrorWindowOpen } from './util.js'; // +++
 import { openModal, closeModal } from './util-modal.js'; // +++
 import { changeEffect, resetEffect } from './photo-effects.js'; // +++
 import { resetScale, scaleUp, scaleDown } from './photo-scale.js'; // +++
 import { pristine, formHashtag, formComment } from './validator.js';
+// import { formHashtag, formComment } from './validator.js';
 
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -19,11 +20,17 @@ const formEffectsListPreview = Array.from(formEffectsList.querySelectorAll('.eff
 const photoScaleSmaller = formOverlay.querySelector('.scale__control--smaller'); // +++
 const photoScaleBigger = formOverlay.querySelector('.scale__control--bigger'); // +++
 
-const onDocumentKeydownEscapeHandler = onDocumentKeydownEscape(closeUploadModal);
+// const onDocumentKeydownEscapeHandler = onDocumentKeydownEscape(closeUploadModal);
 
 const onModalUploadHandler = (evt) => {
   evt.preventDefault();
   openUploadModal();
+};
+
+const onModalUploadCloseHandler = (evt) => {
+  if (onDocumentKeydownEscape(evt) && !getIsErrorWindowOpen()) {
+    closeUploadModal();
+  }
 };
 
 function openUploadModal() {
@@ -39,14 +46,15 @@ function openUploadModal() {
     });
   }
 
-  pristine.reset();
+  // pristine.reset();
   openModal(formOverlay);
   resetEffect();
   resetScale();
-  formHashtag.value = '';
-  formComment.value = '';
+  // formHashtag.value = '';
+  // formComment.value = '';
 
-  document.addEventListener('keydown', onDocumentKeydownEscapeHandler);
+  // document.addEventListener('keydown', onDocumentKeydownEscapeHandler);
+  document.addEventListener('keydown', onModalUploadCloseHandler);
   formHashtag.addEventListener('keydown', onKeyStopPropagation);
   formComment.addEventListener('keydown', onKeyStopPropagation);
   formInput.removeEventListener('change', onModalUploadHandler);
@@ -60,9 +68,14 @@ function openUploadModal() {
 
 function closeUploadModal() {
   formInput.value = '';
+  formHashtag.value = '';
+  formComment.value = '';
+  pristine.reset();
+
   closeModal(formOverlay);
 
-  document.removeEventListener('keydown', onDocumentKeydownEscapeHandler);
+  // document.removeEventListener('keydown', onDocumentKeydownEscapeHandler);
+  document.removeEventListener('keydown', onModalUploadCloseHandler);
   formHashtag.removeEventListener('keydown', onKeyStopPropagation);
   formComment.removeEventListener('keydown', onKeyStopPropagation);
   formInput.addEventListener('change', onModalUploadHandler);

@@ -83,6 +83,9 @@ const setUserFormSubmit = (onSuccess) => {
         .then(() => {
           onSuccess();
           showSuccess('Изображение успешно загружено');
+          pristine.reset();
+          formHashtag.value = '';
+          formComment.value = '';
         })
         .catch((err) => {
           // console.log('НЕ ВАЛИДНО');
