@@ -2,7 +2,7 @@ import { onDocumentKeydownEscape, onKeyStopPropagation, getIsErrorWindowOpen } f
 import { openModal, closeModal } from './util-modal.js'; // +++
 import { changeEffect, resetEffect } from './photo-effects.js'; // +++
 import { resetScale, scaleUp, scaleDown } from './photo-scale.js'; // +++
-import { pristine, formHashtag, formComment } from './validator.js';
+import { pristine, formHashtag, formComment } from './validator.js'; // +++
 // import { formHashtag, formComment } from './validator.js';
 
 
