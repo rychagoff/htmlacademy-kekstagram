@@ -1,4 +1,4 @@
-import { onDocumentKeydownEscape } from './util.js'; // +++
+import { onDocumentKeydownEscape } from './util.js'; // ++++
 import { openModal, closeModal } from './util-modal.js'; // +++
 import { picturesList } from './gallery.js'; // +++
 import { START_COMMENTS, COMMENTS_STEP } from './data.js'; // +++
