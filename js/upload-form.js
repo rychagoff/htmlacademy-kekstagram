@@ -45,12 +45,10 @@ function openUploadModal() {
       preview.style.backgroundImage = `url(${filePath})`;
     });
   }
-  // pristine.reset();
+
   openModal(formOverlay);
   resetEffect();
   resetScale();
-  // formHashtag.value = '';
-  // formComment.value = '';
 
   // document.addEventListener('keydown', onDocumentKeydownEscapeHandler);
   document.addEventListener('keydown', onModalUploadCloseHandler);
