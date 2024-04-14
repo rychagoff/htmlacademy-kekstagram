@@ -45,7 +45,6 @@ function openUploadModal() {
       preview.style.backgroundImage = `url(${filePath})`;
     });
   }
-
   // pristine.reset();
   openModal(formOverlay);
   resetEffect();
