@@ -5,7 +5,6 @@ import { resetScale, scaleUp, scaleDown } from './photo-scale.js'; // +++
 import { pristine, formHashtag, formComment } from './validator.js'; // +++
 // import { formHashtag, formComment } from './validator.js';
 
-
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const form = document.querySelector('.img-upload__form'); // +++
